@@ -1,0 +1,585 @@
+﻿<UserControl x:Class="Dotnet.Gym.Manager.Gui.Views.UserInfoListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Dotnet.Gym.Manager.Gui.Views"
+			 xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+			 xmlns:cal="http://www.caliburnproject.org"
+			 xmlns:enums="clr-namespace:Dotnet.Gym.Message.Enums;assembly=Dotnet.Gym.Message"
+			 xmlns:utils="clr-namespace:Ironwall.Dotnet.Libraries.Utils.Utils;assembly=Ironwall.Dotnet.Libraries.Utils"
+			 xmlns:appUtils="clr-namespace:Dotnet.Gym.Manager.Gui.Utils"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+			 d:Background="WhiteSmoke">
+	<UserControl.Resources>
+		<utils:BindingProxy x:Key="ViewModelProxy" Data="{Binding}" />
+		<utils:BoolToInverseVisibleConverter x:Key="BoolToInverseVisibleConverter" />
+		<appUtils:ActivePeriodToStringConverter x:Key="ActivePeriodToStringConverter" />
+	</UserControl.Resources>
+	
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="70"/>
+		</Grid.RowDefinitions>
+		<Grid Grid.Row="0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="60" />
+				<RowDefinition Height="60" />
+				<RowDefinition Height="1*" />
+			</Grid.RowDefinitions>
+
+			<Grid Grid.Row="0" Margin="10 0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="250" />
+					<ColumnDefinition Width="1*" />
+					<ColumnDefinition Width="1*" />
+					<ColumnDefinition Width="70" />
+					<ColumnDefinition Width="10" />
+					<ColumnDefinition Width="70" />
+					<ColumnDefinition Width="10" />
+					<ColumnDefinition Width="70" />
+					<ColumnDefinition Width="10" />
+					<ColumnDefinition Width="70" />
+					<ColumnDefinition Width="10" />
+					<ColumnDefinition Width="70" />
+				</Grid.ColumnDefinitions>
+				<Grid Grid.Column="0">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="1*"/>
+						<ColumnDefinition Width="4*"/>
+					</Grid.ColumnDefinitions>
+					<md:PackIcon Grid.Column="0" 
+								 Style="{StaticResource TitlePackIconStyle}"
+								 Kind="User" 
+								 />
+
+					<TextBlock Grid.Column="1"
+							   Style="{StaticResource TitleTextBlockStyle}"
+							   Text="고객 정보 리스트" />
+				</Grid>
+				<!-- Send Message Button -->
+				<Button Grid.Column="3"
+					Style="{StaticResource IconButtonStyle}"
+					ToolTip="추가하기"
+					IsEnabled="{Binding IsButtonEnable}"
+					>
+					<cal:Message.Attach>
+						[Event Click] = [Action OnClickSendMessageButton($source, $eventArgs]
+					</cal:Message.Attach>
+					<md:PackIcon Width="30" Height="30" Kind="Envelope" />
+				</Button>
+
+				<!-- Add Button -->
+				<Button Grid.Column="5"
+						Style="{StaticResource IconButtonStyle}"
+						ToolTip="추가하기"
+						IsEnabled="{Binding IsButtonEnable}"
+						>
+					<cal:Message.Attach>
+						[Event Click] = [Action OnClickInsertButton($source, $eventArgs]
+					</cal:Message.Attach>
+					<md:PackIcon Width="30" Height="30" Kind="AddBox" />
+				</Button>
+
+				<!-- Remove Button -->
+				<Button Grid.Column="7"
+						Style="{StaticResource IconButtonStyle}" 
+						ToolTip="삭제하기"
+						IsEnabled="{Binding IsButtonEnable}"
+						>
+					<cal:Message.Attach>
+						[Event Click] = [Action OnClickDeleteButton($source, $eventArgs]
+					</cal:Message.Attach>
+					<md:PackIcon Width="30" Height="30" Kind="MinusBox" />
+				</Button>
+
+				<!-- Refresh Button -->
+				<Button Grid.Column="9"
+						Style="{StaticResource IconButtonStyle}"
+						ToolTip="갱신하기"
+						IsEnabled="{Binding IsButtonEnable}"
+						>
+					<cal:Message.Attach>
+						[Event Click] = [Action OnClickReloadButton($source, $eventArgs)]
+					</cal:Message.Attach>
+					<Button.Content>
+						<Grid>
+							<ProgressBar Width="30"
+										 Height="30"
+										 Visibility="{Binding ReloadButtonEnable, Converter={StaticResource BoolToInverseVisibleConverter}}"
+										 Style="{DynamicResource MaterialDesignCircularProgressBar}"
+										 IsIndeterminate="True"
+										 Value="44" />
+							<md:PackIcon Kind="CircleArrows"
+											 Width="30" Height="30"
+											 Visibility="{Binding ReloadButtonEnable, Converter={StaticResource BooleanToVisibilityConverter}}"
+											 ToolTip="갱신하기"/>
+						</Grid>
+					</Button.Content>
+
+				</Button>
+				
+				<!-- Save Button -->
+				<!--<Button Grid.Column="9"
+						VerticalAlignment="Center"
+						Margin="2 2"
+						Style="{StaticResource MaterialDesignIconButton}"
+						ToolTip="저장하기"
+						IsEnabled="{Binding IsButtonEnable}"
+						md:RippleAssist.IsCentered="True">
+					<cal:Message.Attach>
+						[Event Click] = [Action OnClickSaveButton($source, $eventArgs]
+					</cal:Message.Attach>
+					<Button.Content>
+						<Grid>
+							<ProgressBar Width="30"
+										 Height="30"
+										 Visibility="{Binding SaveButtonEnable, Converter={StaticResource BoolToInverseVisibleConverter}}"
+										 Style="{DynamicResource MaterialDesignCircularProgressBar}"
+										 IsIndeterminate="True"
+										 Value="44" />
+							<md:PackIcon Kind="FloppyDisc"
+										 Width="30" Height="30"
+										 Visibility="{Binding SaveButtonEnable, Converter={StaticResource BooleanToVisibilityConverter}}"
+										 ToolTip="저장하기"/>
+						</Grid>
+					</Button.Content>
+				</Button>-->
+
+				<!-- Service Button -->
+				<Button Grid.Column="11"
+					VerticalAlignment="Center"
+					Margin="2 2"
+					Style="{StaticResource MaterialDesignIconButton}"
+					ToolTip="운동기간 등록"
+					IsEnabled="{Binding IsButtonEnable}"
+					md:RippleAssist.IsCentered="True">
+				<cal:Message.Attach>
+					[Event Click] = [Action OnClickExtendButton($source, $eventArgs]
+				</cal:Message.Attach>
+				<Button.Content>
+					<Grid>
+						<md:PackIcon Kind="WeightLifter"
+									 Width="30" Height="30"
+									 ToolTip="운동기간 등록"/>
+					</Grid>
+				</Button.Content>
+				</Button>
+
+			</Grid>
+			<Grid Grid.Row="1" Margin="10 0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="200"/>
+					<ColumnDefinition Width="10"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="10"/>
+					<ColumnDefinition Width="70"/>
+					<ColumnDefinition Width="10"/>
+					<ColumnDefinition Width="70"/>
+				</Grid.ColumnDefinitions>
+				<ComboBox Grid.Column="0"
+						  VerticalAlignment="Center"
+						  HorizontalContentAlignment="Center"
+						  ItemsSource="{Binding Source={utils:EnumBindingSource {x:Type enums:EnumSearchCondition}}}"
+						  cal:Message.Attach="[Event SelectionChanged] = [Action ConditionSelectionChanged($source, $eventArgs)];"
+						  SelectedItem="{Binding SearchCondition, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+					<ComboBox.ItemsPanel>
+						<ItemsPanelTemplate>
+							<VirtualizingStackPanel />
+						</ItemsPanelTemplate>
+					</ComboBox.ItemsPanel>
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding}" />
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+					<ComboBox.ItemContainerStyle>
+						<Style TargetType="{x:Type ComboBoxItem}">
+							<Setter Property="HorizontalAlignment" Value="Center"/>
+						</Style>
+					</ComboBox.ItemContainerStyle>
+				</ComboBox>
+				<TextBox Grid.Column="2"
+						 VerticalAlignment="Center"
+						 IsEnabled="{Binding IsInputable, UpdateSourceTrigger=PropertyChanged}"
+						 Text="{Binding SearchData, UpdateSourceTrigger=PropertyChanged}"/>
+				<Button Grid.Column="4"
+						IsEnabled="{Binding IsSearchable, UpdateSourceTrigger=PropertyChanged}"
+						Style="{StaticResource IconButtonStyle}">
+					<cal:Message.Attach>
+						[Event Click] = [Action OnClickSearchButton($source, $eventArgs]
+					</cal:Message.Attach>
+					<md:PackIcon Width="30" Height="30" Kind="Search" />
+				</Button>
+				<Button Grid.Column="6"
+						Style="{StaticResource IconButtonStyle}">
+					<cal:Message.Attach>
+						[Event Click] = [Action OnClickClearButton($source, $eventArgs]
+					</cal:Message.Attach>
+					<md:PackIcon Width="30" Height="30" Kind="Clear" />
+				</Button>
+
+			</Grid>
+			<Grid Grid.Row="2">
+				<!-- ProgressBar section -->
+				<ProgressBar Width="50"
+				 Height="50"
+				 Margin="16"
+				 IsIndeterminate="True"
+				 Value="44">
+					<ProgressBar.Style>
+						<Style TargetType="ProgressBar" BasedOn="{StaticResource MaterialDesignCircularProgressBar}">
+							<!-- 기본값은 표시 안 함 -->
+							<Setter Property="Visibility" Value="Collapsed" />
+							<Style.Triggers>
+								<!-- If IsVisible == false, show ProgressBar -->
+								<DataTrigger Binding="{Binding IsVisible}" Value="False">
+									<Setter Property="Visibility" Value="Visible" />
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</ProgressBar.Style>
+				</ProgressBar>
+
+				<!-- DataGrid section -->
+				<DataGrid ItemsSource="{Binding ViewModelProvider}"
+						  AlternationCount="{Binding Items.Count, RelativeSource={RelativeSource Self}}"
+						  SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}"
+						  cal:Message.Attach="[Event MouseDoubleClick] = [Action OnClickUserDetail($source, $eventArgs)];"
+						  Style="{StaticResource CustomDataGridStyle}">
+					<DataGrid.Columns>
+						<DataGridTemplateColumn>
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<CheckBox Style="{StaticResource MaterialDesignCheckBox}" IsChecked="{Binding IsSelected, Mode=TwoWay}">
+										<cal:Message.Attach>
+											[Event Click] = [Action OnClickCheckBoxItem($source, $eventArgs)];
+										</cal:Message.Attach>
+									</CheckBox>
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+
+							<DataGridTemplateColumn.Header>
+								<Border Padding="0 0 0 0"
+										Margin="-2 0 0 0">
+									<CheckBox Style="{StaticResource MaterialDesignCheckBox}"
+											  IsChecked="{Binding Data.IsAllChecked, Mode=TwoWay, Source={StaticResource ViewModelProxy}}"
+											  HorizontalAlignment="Center">
+										<cal:Message.Attach>
+											[Event Click] = [Action OnClickCheckBoxColumnHeader($source, $eventArgs)];
+										</cal:Message.Attach>
+									</CheckBox>
+								</Border>
+							</DataGridTemplateColumn.Header>
+						</DataGridTemplateColumn>
+
+						<!-- Id -->
+						<DataGridTemplateColumn Header="회원번호"
+												 SortMemberPath="Id"
+												 CanUserSort="True">
+							<DataGridTemplateColumn.HeaderStyle>
+								<Style TargetType="{x:Type DataGridColumnHeader}"
+										BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+									<Setter Property="HorizontalAlignment" Value="Center" />
+									<Setter Property="VerticalAlignment" Value="Center" />
+									<Setter Property="BorderThickness" Value="0"/>
+								</Style>
+							</DataGridTemplateColumn.HeaderStyle>
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<TextBlock VerticalAlignment="Center"
+											   TextAlignment="Center"
+											   Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}"/>
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+						</DataGridTemplateColumn>
+
+						<!-- UserName -->
+						<DataGridTextColumn Header="고객명"
+											IsReadOnly="True"
+											Binding="{Binding UserName}">
+							<DataGridTextColumn.HeaderStyle>
+								<Style TargetType="{x:Type DataGridColumnHeader}"
+										BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+									<Setter Property="HorizontalAlignment" Value="Center" />
+									<Setter Property="VerticalAlignment" Value="Center" />
+									<Setter Property="BorderThickness" Value="0"/>
+								</Style>
+							</DataGridTextColumn.HeaderStyle>
+							<DataGridTextColumn.ElementStyle>
+								<Style TargetType="{x:Type TextBlock}">
+									<Setter Property="HorizontalAlignment" Value="Center" />
+									<Setter Property="VerticalAlignment" Value="Center" />
+								</Style>
+							</DataGridTextColumn.ElementStyle>
+						</DataGridTextColumn>
+
+						<!-- MobilePhone -->
+						<DataGridTextColumn Header="전화번호"
+											IsReadOnly="True"
+											SortMemberPath="MobilePhone"
+											Binding="{Binding MobilePhone}">
+							<DataGridTextColumn.HeaderStyle>
+								<Style TargetType="{x:Type DataGridColumnHeader}"
+								BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+									<Setter Property="HorizontalAlignment" Value="Center" />
+									<Setter Property="VerticalAlignment" Value="Center" />
+									<Setter Property="BorderThickness" Value="0"/>
+								</Style>
+							</DataGridTextColumn.HeaderStyle>
+							<DataGridTextColumn.ElementStyle>
+								<Style TargetType="{x:Type TextBlock}">
+									<Setter Property="HorizontalAlignment" Value="Center" />
+									<Setter Property="VerticalAlignment" Value="Center" />
+								</Style>
+							</DataGridTextColumn.ElementStyle>
+						</DataGridTextColumn>
+
+						<!-- Age -->
+						<DataGridTextColumn Header="나이"
+											SortMemberPath="Age"
+											IsReadOnly="True"
+											Binding="{Binding Age}">
+							<DataGridTextColumn.HeaderStyle>
+								<Style TargetType="{x:Type DataGridColumnHeader}"
+									   BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+									<Setter Property="HorizontalAlignment" Value="Center" />
+									<Setter Property="VerticalAlignment" Value="Center" />
+									<Setter Property="BorderThickness" Value="0"/>
+								</Style>
+							</DataGridTextColumn.HeaderStyle>
+							<DataGridTextColumn.ElementStyle>
+								<Style TargetType="{x:Type TextBlock}">
+									<Setter Property="HorizontalAlignment" Value="Center" />
+									<Setter Property="VerticalAlignment" Value="Center" />
+								</Style>
+							</DataGridTextColumn.ElementStyle>
+						</DataGridTextColumn>
+
+
+						<!-- Gender -->
+						<DataGridTemplateColumn Header="성별"
+												SortMemberPath="Gender"
+												IsReadOnly="True"
+												CanUserSort="True">
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<TextBlock Text="{Binding Gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+							<DataGridTemplateColumn.CellEditingTemplate>
+								<DataTemplate>
+									<ComboBox VerticalAlignment="Center"
+											  ItemsSource="{Binding Source={utils:EnumBindingSource {x:Type enums:EnumGenderType}}}"
+											  SelectedItem="{Binding Gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+										<ComboBox.ItemsPanel>
+											<ItemsPanelTemplate>
+												<VirtualizingStackPanel />
+											</ItemsPanelTemplate>
+										</ComboBox.ItemsPanel>
+										<ComboBox.ItemTemplate>
+											<DataTemplate>
+												<TextBlock Text="{Binding}" HorizontalAlignment="Center"/>
+											</DataTemplate>
+										</ComboBox.ItemTemplate>
+										<ComboBox.ItemContainerStyle>
+											<Style TargetType="{x:Type ComboBoxItem}">
+												<Setter Property="HorizontalAlignment" Value="Center"/>
+											</Style>
+										</ComboBox.ItemContainerStyle>
+									</ComboBox>
+								</DataTemplate>
+							</DataGridTemplateColumn.CellEditingTemplate>
+						</DataGridTemplateColumn>
+
+						<!-- RegisterDate -->
+						<DataGridTextColumn Header="최초 등록일"
+											IsReadOnly="True"
+											SortMemberPath="{Binding RegisterDate}"
+											CanUserSort="True"
+											Binding="{Binding RegisterDate}">
+							<DataGridTextColumn.HeaderStyle>
+								<Style TargetType="{x:Type DataGridColumnHeader}"
+									   BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+									<Setter Property="HorizontalAlignment" Value="Center" />
+									<Setter Property="VerticalAlignment" Value="Center" />
+									<Setter Property="BorderThickness" Value="0"/>
+								</Style>
+							</DataGridTextColumn.HeaderStyle>
+							<DataGridTextColumn.ElementStyle>
+								<Style TargetType="{x:Type TextBlock}">
+									<Setter Property="HorizontalAlignment" Value="Center" />
+									<Setter Property="VerticalAlignment" Value="Center" />
+								</Style>
+							</DataGridTextColumn.ElementStyle>
+						</DataGridTextColumn>
+
+						<!-- ActivePeriod -->
+						<DataGridTemplateColumn Header="서비스 기간"
+												IsReadOnly="True"
+												SortMemberPath="{Binding ActivePeriod}"
+												CanUserSort="True">
+							<DataGridTemplateColumn.HeaderStyle>
+								<Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+									<Setter Property="HorizontalAlignment" Value="Center"/>
+									<Setter Property="VerticalAlignment" Value="Center"/>
+									<Setter Property="BorderThickness" Value="0"/>
+								</Style>
+							</DataGridTemplateColumn.HeaderStyle>
+
+							<!-- 데이터 표시 (읽기 전용) -->
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+											   Text="{Binding ActivePeriod, Converter={StaticResource ActivePeriodToStringConverter}}"/>
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+
+							<!-- 데이터 편집 (DatePicker 사용) -->
+							<DataGridTemplateColumn.CellEditingTemplate>
+								<DataTemplate>
+									<StackPanel Orientation="Horizontal">
+										<DatePicker SelectedDate="{Binding ActivePeriod.StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+													Width="100"/>
+										<TextBlock Text=" ~ " VerticalAlignment="Center"/>
+										<DatePicker SelectedDate="{Binding ActivePeriod.EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+													Width="100"/>
+									</StackPanel>
+								</DataTemplate>
+							</DataGridTemplateColumn.CellEditingTemplate>
+						</DataGridTemplateColumn>
+
+						<!-- IsActive -->
+						<DataGridTemplateColumn Header="서비스 상태"
+									SortMemberPath="ServiceState"
+									IsReadOnly="True"
+									CanUserSort="True">
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<TextBlock Text="{Binding ServiceState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+								   HorizontalAlignment="Center"/>
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+							<DataGridTemplateColumn.CellEditingTemplate>
+								<DataTemplate>
+									<ComboBox VerticalAlignment="Center"
+											  ItemsSource="{Binding Source={utils:EnumBindingSource {x:Type enums:EnumServiceState}}}"
+											  SelectedItem="{Binding ServiceState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+										<ComboBox.ItemsPanel>
+											<ItemsPanelTemplate>
+												<VirtualizingStackPanel />
+											</ItemsPanelTemplate>
+										</ComboBox.ItemsPanel>
+										<ComboBox.ItemTemplate>
+											<DataTemplate>
+												<TextBlock Text="{Binding}" HorizontalAlignment="Center"/>
+											</DataTemplate>
+										</ComboBox.ItemTemplate>
+										<ComboBox.ItemContainerStyle>
+											<Style TargetType="{x:Type ComboBoxItem}">
+												<Setter Property="HorizontalAlignment" Value="Center"/>
+											</Style>
+										</ComboBox.ItemContainerStyle>
+									</ComboBox>
+								</DataTemplate>
+							</DataGridTemplateColumn.CellEditingTemplate>
+						</DataGridTemplateColumn>
+
+						<!-- Locker -->
+						<DataGridTemplateColumn Header="라커번호"
+												 SortMemberPath="Locker.Locker"
+												 CanUserSort="True">
+							<DataGridTemplateColumn.HeaderStyle>
+								<Style TargetType="{x:Type DataGridColumnHeader}"
+										BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+									<Setter Property="HorizontalAlignment" Value="Center" />
+									<Setter Property="VerticalAlignment" Value="Center" />
+									<Setter Property="BorderThickness" Value="0"/>
+								</Style>
+							</DataGridTemplateColumn.HeaderStyle>
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<TextBlock VerticalAlignment="Center"
+											   TextAlignment="Center"
+											   Text="{Binding Locker.Locker, UpdateSourceTrigger=PropertyChanged}"/>
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+						</DataGridTemplateColumn>
+
+
+						<!-- Locker -->
+						<DataGridTemplateColumn Header="신발장번호"
+												 SortMemberPath="Locker.ShoeLocker"
+												 CanUserSort="True">
+							<DataGridTemplateColumn.HeaderStyle>
+								<Style TargetType="{x:Type DataGridColumnHeader}"
+										BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+									<Setter Property="HorizontalAlignment" Value="Center" />
+									<Setter Property="VerticalAlignment" Value="Center" />
+									<Setter Property="BorderThickness" Value="0"/>
+								</Style>
+							</DataGridTemplateColumn.HeaderStyle>
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<TextBlock VerticalAlignment="Center"
+											   TextAlignment="Center"
+											   Text="{Binding Locker.ShoeLocker, UpdateSourceTrigger=PropertyChanged}"/>
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+						</DataGridTemplateColumn>
+
+
+						<!-- IsActive -->
+						<DataGridTemplateColumn Header="가입상태"
+												SortMemberPath="IsActive"
+												IsReadOnly="True"
+												CanUserSort="True">
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<TextBlock Text="{Binding IsActiveState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+											   HorizontalAlignment="Center"/>
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+							<DataGridTemplateColumn.CellEditingTemplate>
+								<DataTemplate>
+									<ComboBox VerticalAlignment="Center"
+											  ItemsSource="{Binding Source={utils:EnumBindingSource {x:Type enums:EnumTrueFalse}}}"
+											  SelectedItem="{Binding IsActiveState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+										<ComboBox.ItemsPanel>
+											<ItemsPanelTemplate>
+												<VirtualizingStackPanel />
+											</ItemsPanelTemplate>
+										</ComboBox.ItemsPanel>
+										<ComboBox.ItemTemplate>
+											<DataTemplate>
+												<TextBlock Text="{Binding}" HorizontalAlignment="Center"/>
+											</DataTemplate>
+										</ComboBox.ItemTemplate>
+										<ComboBox.ItemContainerStyle>
+											<Style TargetType="{x:Type ComboBoxItem}">
+												<Setter Property="HorizontalAlignment" Value="Center"/>
+											</Style>
+										</ComboBox.ItemContainerStyle>
+									</ComboBox>
+								</DataTemplate>
+							</DataGridTemplateColumn.CellEditingTemplate>
+						</DataGridTemplateColumn>
+
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+
+		</Grid>
+		<StackPanel Grid.Row="1"
+					Height="50"
+					Margin="10 20"
+					Orientation="Horizontal">
+
+			<!-- Mulitlingual -->
+			<TextBlock Text="선택한 고객 수 : " />
+			<TextBlock Text="{Binding SelectedItemCount, UpdateSourceTrigger=PropertyChanged}" />
+		</StackPanel>
+	</Grid>
+</UserControl>

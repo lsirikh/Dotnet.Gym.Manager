@@ -1,0 +1,301 @@
+﻿<Controls:MetroWindow x:Class="Dotnet.Gym.Manager.Gui.Views.EmsMessageView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Dotnet.Gym.Manager.Gui.Views"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:cal="http://www.caliburnproject.org"
+	    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:enums="clr-namespace:Dotnet.Gym.Message.Enums;assembly=Dotnet.Gym.Message"
+        xmlns:utils="clr-namespace:Ironwall.Dotnet.Libraries.Utils.Utils;assembly=Ironwall.Dotnet.Libraries.Utils"
+        xmlns:appUtils="clr-namespace:Dotnet.Gym.Manager.Gui.Utils"
+        xmlns:behaviors="clr-namespace:Dotnet.Gym.Manager.Gui.Behaviors"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+	    xmlns:viewModel="clr-namespace:Dotnet.Gym.Manager.Gui.ViewModels"
+        mc:Ignorable="d" 
+        ShowIconOnTitleBar="False"
+        Title="Send Ems Message" 
+        d:Background="WhiteSmoke"
+        Height="900" Width="500">
+	
+	<!-- 메인 Grid -->
+	<Grid>
+		<!-- 열 정의 (AddUserView 와 유사하게 4개) -->
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="120"/>
+			<ColumnDefinition Width="120"/>
+			<ColumnDefinition Width="120"/>
+			<ColumnDefinition Width="120"/>
+		</Grid.ColumnDefinitions>
+
+		<!-- 행 정의 -->
+		<Grid.RowDefinitions>
+			<!-- (0) 타이틀 영역 -->
+			<RowDefinition Height="80" />
+			<!-- (3) NoticeType (Enum) -->
+			<RowDefinition Height="50" />
+			<!-- (5) Sender -->
+			<RowDefinition Height="10" />
+			<RowDefinition Height="50" />
+			<!-- (7) Receiver -->
+			<RowDefinition Height="10" />
+			<RowDefinition Height="50" />
+			<!-- (9) Title -->
+			<RowDefinition Height="10" />
+			<RowDefinition Height="50" />
+			<!-- (11) Message (멀티라인) -->
+			<RowDefinition Height="10" />
+			<RowDefinition Height="100" />
+			<!-- (13) MsgType (Enum) -->
+			<RowDefinition Height="10" />
+			<RowDefinition Height="50" />
+			<!-- (15) Destination -->
+			<RowDefinition Height="10" />
+			<RowDefinition Height="50" />
+			<!-- (17) IsReservation (체크박스) -->
+			<RowDefinition Height="10" />
+			<RowDefinition Height="50" />
+			<!-- (19) Reservation (DatePicker) -->
+			<RowDefinition Height="10" />
+			<RowDefinition Height="50" />
+			<!-- (21) SendTime (DatePicker) -->
+			<RowDefinition Height="10" />
+			<RowDefinition Height="50" />
+			<!-- (23) AttachedImages 표시 -->
+			<RowDefinition Height="10" />
+			<RowDefinition Height="50" />
+			<RowDefinition Height="10" />
+			<RowDefinition Height="70" />
+			<RowDefinition Height="10" />
+			<RowDefinition Height="50" />
+			<!-- (25) 취소/전송 버튼 -->
+			<RowDefinition Height="10" />
+		</Grid.RowDefinitions>
+
+		<!-- 상단 타이틀 영역 -->
+		<Grid Grid.Row="0" Grid.ColumnSpan="4">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="4*" />
+			</Grid.ColumnDefinitions>
+			<md:PackIcon Grid.Column="0"
+                         Style="{StaticResource TitlePackIconStyle}"
+                         Kind="MessageOutline" />
+			<TextBlock Grid.Column="1"
+                       Style="{StaticResource TitleTextBlockStyle}"
+                       Text="EMS 메시지 설정"
+                       VerticalAlignment="Center" />
+		</Grid>
+
+		<!-- NoticeType (Enum) -->
+		<TextBlock Grid.Row="1" 
+                   Style="{StaticResource PropertyTextBlockStyle}"
+                   Text="공지 유형" />
+		<ComboBox Grid.Row="1"
+                  Grid.Column="1"
+                  Grid.ColumnSpan="3"
+                  Style="{StaticResource PropertyComboBoxStyle}"
+                  ItemsSource="{Binding Source={utils:EnumBindingSource {x:Type enums:EnumNoticeType}}}"
+                  SelectedItem="{Binding NoticeType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+			<ComboBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ComboBox.ItemsPanel>
+		</ComboBox>
+
+		<!-- Sender -->
+		<TextBlock Grid.Row="3"
+                   Style="{StaticResource PropertyTextBlockStyle}"
+                   Text="발신자" />
+		<TextBox Grid.Row="3"
+                 Grid.Column="1"
+                 Grid.ColumnSpan="3"
+				 IsReadOnly="True"
+                 Style="{StaticResource PropertyTextBoxStyle}"
+                 Text="{Binding Sender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+		<!-- Receiver -->
+		<TextBlock Grid.Row="5"
+                   Style="{StaticResource PropertyTextBlockStyle}"
+                   Text="수신자" />
+		<ListView Grid.Row="5"
+                  Grid.Column="1"
+                  Grid.ColumnSpan="3"
+				  Style="{StaticResource MaterialDesignCardsListBox}"
+                  ItemsSource="{Binding Receivers}"/>
+
+		<!-- Title -->
+		<TextBlock Grid.Row="7"
+                   Style="{StaticResource PropertyTextBlockStyle}"
+                   Text="제목" />
+		<TextBox Grid.Row="7"
+                 Grid.Column="1"
+                 Grid.ColumnSpan="3"
+                 Style="{StaticResource PropertyTextBoxStyle}"
+                 Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+		<!-- Message (멀티라인 텍스트) -->
+		<TextBlock Grid.Row="9"
+                   Style="{StaticResource PropertyTextBlockStyle}"
+                   Text="메시지" />
+		<TextBox Grid.Row="9"
+                 Grid.Column="1"
+                 Grid.ColumnSpan="3"
+                 Style="{StaticResource PropertyTextBoxStyle}"
+                 Text="{Binding Message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 AcceptsReturn="True"
+                 TextWrapping="Wrap" />
+
+		<!-- MsgType (Enum) -->
+		<TextBlock Grid.Row="11"
+                   Style="{StaticResource PropertyTextBlockStyle}"
+                   Text="메시지 타입" />
+		<ComboBox Grid.Row="11"
+                  Grid.Column="1"
+                  Grid.ColumnSpan="3"
+                  Style="{StaticResource PropertyComboBoxStyle}"
+                  ItemsSource="{Binding Source={utils:EnumBindingSource {x:Type enums:EnumMsgType}}}"
+                  SelectedItem="{Binding MsgType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+			<ComboBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ComboBox.ItemsPanel>
+		</ComboBox>
+
+		<!-- Destination -->
+		<!--<TextBlock Grid.Row="13"
+                   Style="{StaticResource PropertyTextBlockStyle}"
+                   Text="목적지" />
+		<TextBox Grid.Row="13"
+                 Grid.Column="1"
+                 Grid.ColumnSpan="3"
+                 Style="{StaticResource PropertyTextBoxStyle}"
+                 Text="{Binding Destination, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />-->
+
+		<!-- IsReservation (예약 발송 여부) -->
+		<TextBlock Grid.Row="15"
+                   Style="{StaticResource PropertyTextBlockStyle}"
+                   Text="예약 발송" />
+		<CheckBox Grid.Row="15"
+                  Grid.Column="1"
+                  VerticalAlignment="Center"
+                  Style="{StaticResource MaterialDesignCheckBox}"
+                  IsChecked="{Binding IsReservation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+
+		<!-- Reservation (DialogHost로 날짜/시간 선택) -->
+		<TextBlock Grid.Row="17"
+
+                   Style="{StaticResource PropertyTextBlockStyle}"
+                   Text="예약일시" />
+
+		<!-- DialogHost -->
+		<md:DialogHost Grid.Row="17"
+					   Grid.Column="1"
+					   Grid.ColumnSpan="3"
+					   x:Name="ReservationDialogHost"
+					   behaviors:DialogHostBehaviors.DialogOpenedCommand="{Binding DialogOpenedCommand}"
+					   behaviors:DialogHostBehaviors.DialogClosingCommand="{Binding DialogClosingCommand}">
+			<StackPanel Orientation="Horizontal">
+				<!-- 선택된 Reservation 표시 -->
+				<TextBlock VerticalAlignment="Center"
+						   FontSize="16"
+						   Text="{Binding Reservation, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}"
+						   ToolTip="예약 일시" />
+
+				<!-- 다이얼로그 열기 버튼 -->
+				<Button Margin="8 0 0 0"
+						Content="예약"
+						Command="{x:Static md:DialogHost.OpenDialogCommand}">
+					<Button.CommandParameter>
+						<Grid Margin="-1">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="*" />
+								<RowDefinition Height="Auto" />
+							</Grid.RowDefinitions>
+
+							<!-- Calendar + Clock -->
+							<StackPanel Grid.Row="0" Orientation="Horizontal">
+								<Calendar x:Name="CombinedCalendar"
+										  Margin="-1 -4 -1 0" />
+								<md:Clock x:Name="CombinedClock"
+										  DisplayAutomation="CycleWithSeconds"
+										  Is24Hours="True" />
+							</StackPanel>
+
+							<!-- Cancel / OK 버튼 -->
+							<StackPanel Grid.Row="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                Margin="8">
+								<Button Style="{StaticResource MaterialDesignFlatButton}"
+                                Command="{x:Static md:DialogHost.CloseDialogCommand}"
+                                CommandParameter="0"
+                                Content="CANCEL" />
+								<Button Style="{StaticResource MaterialDesignFlatButton}"
+                                Command="{x:Static md:DialogHost.CloseDialogCommand}"
+                                CommandParameter="1"
+                                Content="OK" />
+							</StackPanel>
+						</Grid>
+					</Button.CommandParameter>
+				</Button>
+			</StackPanel>
+		</md:DialogHost>
+
+		<!-- AttachedImages -->
+		<TextBlock Grid.Row="19"
+                   Style="{StaticResource PropertyTextBlockStyle}"
+                   Text="첨부 이미지" />
+		<ListBox Grid.Row="19"
+					 Grid.Column="1"
+					 Grid.ColumnSpan="3"
+					 ItemsSource="{Binding AttachedImages}"
+					 BorderBrush="Transparent"
+					 Background="Transparent"
+					 Padding="0">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<StackPanel Orientation="Horizontal" Margin="0 2 0 2">
+						<!-- 파일명 표시 (ImageModel.FileName) -->
+						<TextBox Text="{Binding FileName}"
+                         Width="150"
+                         IsReadOnly="True"
+                         VerticalAlignment="Center"
+                         Style="{StaticResource PropertyTextBoxStyle}" />
+
+						<!-- 삭제 버튼 -->
+						<Button Content="–"
+                        Margin="5,0,0,0"
+                        Style="{StaticResource MaterialDesignRaisedButton}"
+                        cal:Message.Attach="RemoveImage($dataContext)" 
+                        Width="30"/>
+					</StackPanel>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<!-- 하단 버튼 (예: 확인 / 취소) -->
+		<StackPanel Grid.Row="23"
+                    Grid.ColumnSpan="4"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+			<Button Content="취소"
+                    Margin="15,0"
+                    Width="80"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    x:Name="ClickCancelButton" />
+			<Button Content="전송"
+                    Margin="15,0"
+                    Width="80"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    x:Name="ClickOkButton" />
+		</StackPanel>
+
+	</Grid>
+</Controls:MetroWindow>
