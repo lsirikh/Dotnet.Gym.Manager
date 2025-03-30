@@ -6,7 +6,24 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <Title>Gym Manager</Title>
+    <Version>1.2</Version>
+    <Authors>GhLee</Authors>
+    <Company>Openfingers</Company>
+    <PackageIcon>GymIcon.ico</PackageIcon>
+    <Product>Gym Manager</Product>
+    <Copyright>Openfingers</Copyright>
+	<!-- **이 부분이 중요**: 실행 파일 아이콘 -->
+	<ApplicationIcon>GymIcon.ico</ApplicationIcon>
+	<Platforms>AnyCPU;x64;x86</Platforms>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="GymIcon.ico" />
+    <None Remove="Resources\Images\GymIcon.ico" />
+    <None Remove="Resources\Images\GymManager.png" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="8.2.0" />
@@ -26,6 +43,20 @@
     <ProjectReference Include="..\..\..\..\workspace_app\Ironwall.Dotnet.Libraries\Ironwall.Dotnet.Libraries.Db\Ironwall.Dotnet.Libraries.Db.csproj" />
     <ProjectReference Include="..\..\..\..\workspace_app\Ironwall.Dotnet.Libraries\Ironwall.Dotnet.Libraries.Utils\Ironwall.Dotnet.Libraries.Utils.csproj" />
     <ProjectReference Include="..\..\..\..\workspace_app\Ironwall.Dotnet.Libraries\Ironwall.Dotnet.Libraries.ViewModel\Ironwall.Dotnet.Libraries.ViewModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="GymIcon.ico">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="Resources\Images\GymIcon.ico">
+      <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>True</Pack>
+    </Content>
+    <Resource Include="Resources\Images\GymManager.png" />
   </ItemGroup>
 
   <ItemGroup>

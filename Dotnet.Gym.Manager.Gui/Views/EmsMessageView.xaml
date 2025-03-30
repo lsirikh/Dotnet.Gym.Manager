@@ -16,9 +16,9 @@
 	    xmlns:viewModel="clr-namespace:Dotnet.Gym.Manager.Gui.ViewModels"
         mc:Ignorable="d" 
         ShowIconOnTitleBar="False"
-        Title="Send Ems Message" 
+        Title="EMS 문자 보내기" 
         d:Background="WhiteSmoke"
-        Height="900" Width="500">
+        Height="750" Width="500">
 	
 	<!-- 메인 Grid -->
 	<Grid>
@@ -64,12 +64,12 @@
 			<RowDefinition Height="10" />
 			<RowDefinition Height="50" />
 			<!-- (23) AttachedImages 표시 -->
-			<RowDefinition Height="10" />
+			<!--<RowDefinition Height="10" />
 			<RowDefinition Height="50" />
 			<RowDefinition Height="10" />
 			<RowDefinition Height="70" />
 			<RowDefinition Height="10" />
-			<RowDefinition Height="50" />
+			<RowDefinition Height="50" />-->
 			<!-- (25) 취소/전송 버튼 -->
 			<RowDefinition Height="10" />
 		</Grid.RowDefinitions>
@@ -177,10 +177,10 @@
                  Text="{Binding Destination, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />-->
 
 		<!-- IsReservation (예약 발송 여부) -->
-		<TextBlock Grid.Row="15"
+		<TextBlock Grid.Row="13"
                    Style="{StaticResource PropertyTextBlockStyle}"
                    Text="예약 발송" />
-		<CheckBox Grid.Row="15"
+		<CheckBox Grid.Row="13"
                   Grid.Column="1"
                   VerticalAlignment="Center"
                   Style="{StaticResource MaterialDesignCheckBox}"
@@ -188,13 +188,13 @@
 
 
 		<!-- Reservation (DialogHost로 날짜/시간 선택) -->
-		<TextBlock Grid.Row="17"
+		<TextBlock Grid.Row="15"
 
                    Style="{StaticResource PropertyTextBlockStyle}"
                    Text="예약일시" />
 
 		<!-- DialogHost -->
-		<md:DialogHost Grid.Row="17"
+		<md:DialogHost Grid.Row="15"
 					   Grid.Column="1"
 					   Grid.ColumnSpan="3"
 					   x:Name="ReservationDialogHost"
@@ -248,10 +248,10 @@
 		</md:DialogHost>
 
 		<!-- AttachedImages -->
-		<TextBlock Grid.Row="19"
+		<TextBlock Grid.Row="17"
                    Style="{StaticResource PropertyTextBlockStyle}"
                    Text="첨부 이미지" />
-		<ListBox Grid.Row="19"
+		<ListBox Grid.Row="17"
 					 Grid.Column="1"
 					 Grid.ColumnSpan="3"
 					 ItemsSource="{Binding AttachedImages}"
@@ -280,7 +280,7 @@
 		</ListBox>
 
 		<!-- 하단 버튼 (예: 확인 / 취소) -->
-		<StackPanel Grid.Row="23"
+		<StackPanel Grid.Row="19"
                     Grid.ColumnSpan="4"
                     Orientation="Horizontal"
                     HorizontalAlignment="Center"

@@ -14,7 +14,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d" 
         ShowIconOnTitleBar="False"
-        Title="Add User" 
+        Title="정보 승인" 
         d:Background="WhiteSmoke"
         Height="280" Width="400">
     <Grid>
