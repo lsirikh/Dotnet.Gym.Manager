@@ -1,6 +1,8 @@
 ﻿using Caliburn.Micro;
 using Dotnet.Gym.Manager.Gui.Models;
+using Dotnet.Gym.Manager.Gui.ViewModels.Components;
 using Dotnet.Gym.Manager.Gui.Views;
+using Ironwall.Dotnet.Libraries.Base.Models;
 using Ironwall.Dotnet.Libraries.Base.Services;
 using Ironwall.Dotnet.Libraries.Db.Services;
 using Ironwall.Dotnet.Libraries.Db.Utils;
@@ -30,13 +32,14 @@ namespace Dotnet.Gym.Manager.Gui.ViewModels;
        Email        : lsirikh@naver.com                                         
  ****************************************************************************/
 internal class ShellViewModel : ConductorOneViewModel
+                                , IHandle<InitialLoadFinishMessage>
 {
     #region - Ctors -
     public ShellViewModel(IEventAggregator eventAggregator
                         , ILogService log
                         , UserInfoListViewModel userInfoListViewModel
                         , LockerInfoViewModel lockerInfoViewModel
-                        , SetupViewModel setupViewModel
+                        , SettingsViewModel settingsViewModel
                         , SetupModel setup
                         , IDbServiceForGym dbService
                         , IExcelImporter excelImporter
@@ -44,7 +47,7 @@ internal class ShellViewModel : ConductorOneViewModel
     {
         UserInfoListViewModel = userInfoListViewModel;
         LockerInfoViewModel = lockerInfoViewModel;
-        SetupViewModel = setupViewModel;
+        SettingsViewModel = settingsViewModel;
         _excelImporter = excelImporter;
         _setup = setup;
         _dbService = dbService;
@@ -58,12 +61,7 @@ internal class ShellViewModel : ConductorOneViewModel
         _eventAggregator?.SubscribeOnUIThread(this);
         await base.OnActivateAsync(cancellationToken);
         await UserInfoListViewModel.ActivateAsync();
-
-        if (_setup.IsLoadExcel)
-        {
-            // Load Excel data when activating ShellViewModel
-            await LoadExcelDataAsync(cancellationToken);
-        }
+        _ = InformPopup(_excelImporter.Result);
     }
 
     protected override async Task OnDeactivateAsync(bool close, CancellationToken cancellationToken)
@@ -104,9 +102,9 @@ internal class ShellViewModel : ConductorOneViewModel
             {
                 selectedViewModel = LockerInfoViewModel;
             }
-            else if (viewContent is SetupView)
+            else if (viewContent is SettingsView)
             {
-                selectedViewModel = SetupViewModel;
+                selectedViewModel = SettingsViewModel;
             }
             else
             {
@@ -123,47 +121,78 @@ internal class ShellViewModel : ConductorOneViewModel
         }
     }
 
-    public async Task LoadExcelDataAsync(CancellationToken token = default)
+    //public async Task LoadExcelDataAsync(CancellationToken token = default)
+    //{
+    //    try
+    //    {
+    //        //await _dbService.DeleteAllUsersAsync();
+
+    //        // Excel 파일이 위치한 디렉토리
+    //        var currentDir = AppDomain.CurrentDomain.BaseDirectory;
+    //        var excelDir = Path.Combine(currentDir, _setup.ExcelFolder);
+
+    //        // 폴더 내 첫 번째 Excel 파일 찾기
+    //        var excelFiles = Directory.GetFiles(excelDir, "*.xlsx");
+    //        if (excelFiles.Length == 0)
+    //        {
+    //            _log?.Warning("No Excel files found in the directory.");
+    //            return;
+    //        }
+
+           
+    //        var memberExcelFile = excelFiles.FirstOrDefault(f => Path.GetFileNameWithoutExtension(f).Contains("회원", StringComparison.OrdinalIgnoreCase));
+    //        if (memberExcelFile == null) return;
+
+    //        // 파일이 열려 있는 경우 대비하여 임시 폴더에 복사
+    //        var tempFilePath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xlsx");
+    //        File.Copy(memberExcelFile, tempFilePath, overwrite: true);
+    //        var ret = await _excelImporter.ImportExcelToDbAsync(tempFilePath, token);
+    //        _ = InformPopup(ret);
+    //        UserInfoListViewModel.OnClickReloadButton(null, null);
+
+    //        // 파일 사용 후 삭제
+    //        File.Delete(tempFilePath);
+
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        _log?.Error($"Error during Excel data import: {ex.Message}");
+    //    }
+    //}
+
+    private async Task InformPopup(bool ret)
     {
         try
         {
-            //await _dbService.DeleteAllUsersAsync();
-
-            // Excel 파일이 위치한 디렉토리
-            var currentDir = AppDomain.CurrentDomain.BaseDirectory;
-            var excelDir = Path.Combine(currentDir, _setup.ExcelFolder);
-
-            // 폴더 내 첫 번째 Excel 파일 찾기
-            var excelFiles = Directory.GetFiles(excelDir, "*.xlsx");
-            if (excelFiles.Length == 0)
-            {
-                _log?.Warning("No Excel files found in the directory.");
-                return;
+            await Task.Delay(2000);
+            var window = IoC.Get<IWindowManager>();
+            var viewModel = IoC.Get<InformViewModel>();
+            if (ret) {
+                viewModel.Title = "사용자 정보 업데이트";
+                viewModel.Content = "회원등록 엑셀 정보를 정상적으로 업데이트 했습니다..";
+                await window.ShowDialogAsync(viewModel);
+                UserInfoListViewModel.OnClickReloadButton(null, null);
+                _log?.Info("Excel data import completed successfully.");
             }
-
-            // 첫 번째 파일 선택
-            var filePath = excelFiles[0];
-
-            //_log?.Info($"Loading Excel file: {filePath}");
-            //await _excelImporter.ImportExcelToDbAsync(filePath, token);
-
-            // 파일이 열려 있는 경우 대비하여 임시 폴더에 복사
-            var tempFilePath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xlsx");
-            File.Copy(filePath, tempFilePath, overwrite: true);
-
-            _log?.Info($"Loading Excel file from temporary path: {tempFilePath}");
-            var ret = await _excelImporter.ImportExcelToDbAsync(tempFilePath, token);
-            UserInfoListViewModel.OnClickReloadButton(null, null);
-
-            // 파일 사용 후 삭제
-            File.Delete(tempFilePath);
-
-            _log?.Info("Excel data import completed successfully.");
+            else
+            {
+                
+                viewModel.Title = "사용자 정보 업데이트 오류";
+                viewModel.Content = "회원등록 엑셀 정보를 업데이트 하는 도중에 에러가 발생하였습니다. 관리자에게 연락해주세요.";
+                await window.ShowDialogAsync(viewModel);
+                _log?.Info("Excel data import was failed...");
+            }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            _log?.Error($"Error during Excel data import: {ex.Message}");
+
+            throw;
         }
+    }
+
+    public async Task HandleAsync(InitialLoadFinishMessage message, CancellationToken cancellationToken)
+    {
+        await InformPopup(message.Result);
     }
     #endregion
     #region - IHanldes -
@@ -171,8 +200,8 @@ internal class ShellViewModel : ConductorOneViewModel
     #region - Properties -
     public UserInfoListViewModel UserInfoListViewModel { get; }
     public LockerInfoViewModel LockerInfoViewModel { get; }
-    public SetupViewModel SetupViewModel { get; }
-    
+    public SettingsViewModel SettingsViewModel { get; set; }
+
     #endregion
     #region - Attributes -
     private IExcelImporter _excelImporter;

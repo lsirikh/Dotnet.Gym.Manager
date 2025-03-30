@@ -12,7 +12,7 @@ namespace Dotnet.Gym.Manager.Gui.ViewModels.Components;
        Company      : Sensorway Co., Ltd.                                       
        Email        : lsirikh@naver.com                                         
     ****************************************************************************/
-public class ConfirmViewModel : BasePanelViewModel
+public class ConfirmViewModel : InformViewModel
 {
     #region - Ctors -
     public ConfirmViewModel(IEventAggregator eventAggregator, ILogService log)
@@ -32,30 +32,11 @@ public class ConfirmViewModel : BasePanelViewModel
     {
         await TryCloseAsync(false);
     }
-
-    public async void OnClickOkButton()
-    {
-        await TryCloseAsync(true);
-    }
-
     #endregion
     #region - IHanldes -
     #endregion
     #region - Properties -
-
-    public string Title
-    {
-        get { return _title; }
-        set { _title = value; NotifyOfPropertyChange(() => Title); }
-    }
-    public string Content
-    {
-        get { return _content; }
-        set { _content = value; NotifyOfPropertyChange(() => Content); }
-    }
     #endregion
     #region - Attributes -
-    private string _title = "확인";
-    private string _content = string.Empty;
     #endregion
 }

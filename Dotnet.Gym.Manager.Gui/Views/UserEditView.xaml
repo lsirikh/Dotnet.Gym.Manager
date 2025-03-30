@@ -14,7 +14,7 @@
 					xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
 					mc:Ignorable="d" 
 					ShowIconOnTitleBar="False"
-					Title="Edit User" 
+					Title="사용자 수정" 
 					d:Background="WhiteSmoke"
 					Height="650" Width="500">
 	<Grid>

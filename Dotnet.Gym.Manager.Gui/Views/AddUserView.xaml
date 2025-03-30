@@ -14,7 +14,7 @@
 					  xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
 					  mc:Ignorable="d" 
 					  ShowIconOnTitleBar="False"
-					  Title="Add User" 
+					  Title="사용자 추가" 
 					  d:Background="WhiteSmoke"
 					  Height="780" Width="500">
 	<Grid>
