@@ -223,8 +223,9 @@ public class UserInfoListViewModel : BaseDataGridPanelViewModel<UserViewModel>
                     return user.MobilePhone.Contains(SearchData);
                 case EnumSearchCondition.ExpiringSoon:
                     return user.ActivePeriod != null &&
-                           user.ActivePeriod.EndDate.Value.Date < DateTime.Now.AddDays(7).Date &&
-                           user.ActivePeriod.EndDate.Value.Date >= DateTime.Now.Date;
+                            user.ActivePeriod.EndDate.Value.Date == DateTime.Now.AddDays(_setup.ExpireSoonDay).Date;
+                           //user.ActivePeriod.EndDate.Value.Date < DateTime.Now.AddDays(3).Date &&
+                           //user.ActivePeriod.EndDate.Value.Date >= DateTime.Now.Date;
                 case EnumSearchCondition.Expired:
                     return user.ActivePeriod != null &&
                            user.ActivePeriod.EndDate.Value.Date < DateTime.Now.Date;
