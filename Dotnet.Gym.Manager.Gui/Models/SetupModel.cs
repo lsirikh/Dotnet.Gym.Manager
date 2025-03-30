@@ -22,4 +22,6 @@ public class SetupModel
     public string PasswordDbServer { get; set; } = string.Empty;
     public string ExcelFolder { get; set; } = string.Empty;
     public bool IsLoadExcel { get; set; }
+    public int ExpireSoonDay { get; set; } = 3;
+    public int ExpireAfterDay { get; set; } = -10;
 }

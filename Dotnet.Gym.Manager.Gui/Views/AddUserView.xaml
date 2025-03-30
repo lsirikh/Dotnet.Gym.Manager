@@ -19,57 +19,57 @@
 					  Height="780" Width="500">
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="120"/>
-			<ColumnDefinition Width="120"/>
-			<ColumnDefinition Width="120"/>
-			<ColumnDefinition Width="120"/>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="1*"/>
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="80"/>
+			<RowDefinition Height="2*"/>
 			<!-- 0: 상단 제목 영역 -->
-			<RowDefinition Height="50"/>
+			<RowDefinition Height="1*"/>
 			<!-- 1: 이름 -->
 			<RowDefinition Height="10"/>
 			<!-- 2: 간격 -->
-			<RowDefinition Height="50"/>
+			<RowDefinition Height="1*"/>
 			<!-- 3: 전화번호 -->
 			<RowDefinition Height="10"/>
 			<!-- 4: 간격 -->
-			<RowDefinition Height="50"/>
+			<RowDefinition Height="1*"/>
 			<!-- 5: 나이 -->
 			<RowDefinition Height="10"/>
 			<!-- 6: 간격 -->
-			<RowDefinition Height="50"/>
+			<RowDefinition Height="1*"/>
 			<!-- 7: 성별 -->
 			<RowDefinition Height="10"/>
 			<!-- 8: 간격 -->
-			<RowDefinition Height="50"/>
+			<RowDefinition Height="1*"/>
 			<!-- 9: 라커 -->
 			<RowDefinition Height="10"/>
 			<!-- 10: 간격 -->
-			<RowDefinition Height="50"/>
+			<RowDefinition Height="1*"/>
 			<!-- 11: 가입일 -->
 			<RowDefinition Height="10"/>
 			<!-- 12: 간격 -->
-			<RowDefinition Height="50"/>
+			<RowDefinition Height="1*"/>
 			<!-- 13: "서비스 기간" 라벨 -->
 			<RowDefinition Height="10"/>
 			<!-- 14: 간격 -->
-			<RowDefinition Height="50"/>
+			<RowDefinition Height="1*"/>
 			<!-- 15: 시작일 + "오늘" 버튼 -->
 			<RowDefinition Height="10"/>
 			<!-- 16: 간격 -->
-			<RowDefinition Height="50"/>
+			<RowDefinition Height="1*"/>
 			<!-- 17: 마감일 -->
 			<RowDefinition Height="10"/>
 			<!-- 18: 간격 -->
-			<RowDefinition Height="50"/>
+			<RowDefinition Height="1*"/>
 			<!-- 19: 기간버튼(1달,6개월,1년) -->
 			<RowDefinition Height="10"/>
 			<!-- 20: 간격 -->
 			<RowDefinition Height="10"/>
 			<!-- 21: 간격 -->
-			<RowDefinition Height="50"/>
+			<RowDefinition Height="1*"/>
 			<!-- 20: 취소/등록 버튼들 -->
 			<RowDefinition Height="10"/>
 		</Grid.RowDefinitions>

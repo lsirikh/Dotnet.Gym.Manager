@@ -85,6 +85,16 @@ public class SettingsViewModel : BasePanelViewModel
             {
                 SetupModel.IsLoadExcel = loadExcel;
             }
+            // ExpireSoonDay가 null이거나 변환 불가하면 기본값(3) 사용
+            if (appSettingsSection["ExpireSoonDay"] != null && int.TryParse(appSettingsSection["ExpireSoonDay"].ToString(), out var expireSoonDay))
+            {
+                SetupModel.ExpireSoonDay = expireSoonDay;
+            }
+            // ExpireAfterDay가 null이거나 변환 불가하면 기본값(-10) 사용
+            if (appSettingsSection["ExpireAfterDay"] != null && int.TryParse(appSettingsSection["ExpireAfterDay"].ToString(), out var expireAfterDay))
+            {
+                SetupModel.ExpireAfterDay = expireAfterDay;
+            }
 
             // 5) 필요한 경우, UI가 SetupModel 변경을 인식하도록 PropertyChange 알림
             //    예: NotifyOfPropertyChange(() => SetupModel);
@@ -137,6 +147,8 @@ public class SettingsViewModel : BasePanelViewModel
             appSettingsSection["PasswordDbServer"] = SetupModel.PasswordDbServer;
             appSettingsSection["ExcelFolder"] = SetupModel.ExcelFolder;
             appSettingsSection["IsLoadExcel"] = SetupModel.IsLoadExcel;
+            appSettingsSection["ExpireSoonDay"] = SetupModel.ExpireSoonDay;
+            appSettingsSection["ExpireAfterDay"] = SetupModel.ExpireAfterDay;
 
             // 4) 변환된 JObject를 다시 문자열로 직렬화 (예쁘게 들여쓰기 옵션)
             var output = JsonConvert.SerializeObject(jObject, Formatting.Indented);

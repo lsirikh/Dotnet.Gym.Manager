@@ -203,22 +203,20 @@
 {
     "AppSettings": {
         "Url": "https://apis.aligo.in/", // Aligo API Url   
-        "Username": "", // Aligo API ID  
+        "Username": "User", // Aligo API ID  
         "Password": "",
-        "ApiKey": "",  // Aligo API 키
+        "ApiKey": "imafakeapikey",  // Aligo API 키
         "Phone": "", // Aligo API Sender 연락처  
         "IpDbServer": "127.0.0.1", // Maria DB IP 주소
         "PortDbServer": 3306, // Maria DB Port
         "DbDatabase": "gymdb", // Maria DB 데이터베이스 이름
         "UidDbServer": "root",  // Maria DB 사용자 ID
-        "PasswordDbServer": "root", // Maria DB 사용자 비밀번호
+        "PasswordDbServer": "****", // Maria DB 사용자 비밀번호
         "ExcelFolder": "C:\\Users\\", // Excel 폴더 경로 ("회원"이라는 단어가 포함된 첫 번째 엑셀 파일)
         "IsLoadExcel": true // 실행 시 Excel 파일을 파싱할지 여부
     }
 }
 ```
-
-> **주의:** 이 파일은 민감한 정보가 포함되어 있으므로 Git으로 추적되지 않도록 `.gitignore`에 반드시 추가하여 관리해 주세요.
 
 ---
 ### Update Date: 2025/03/16
@@ -232,6 +230,7 @@
 * Version : v1.2.0
 
 1. Ironwall.Dotnet.Libraries의 Ironwall.Dotnet.Libraries.Db에 ExcelImporter 연동 로직 구현
-
+2. ExpireSoonDay Settings 설정 업데이트 : x Day 해당일을 설정하면 오늘 날짜로 부터 ExpireSoonDay이후에 서비스 마감되는 사람을 필터링할 수있다(마감일 기준).
+3. ExpireAfterDay Setting 설정 업데이트 : -x Day 해당일을 설정하면 오늘이전 부터 오늘 - x Day 만큼 기간을 조회 해준다(마감일 기준). 
 
 <hr>
