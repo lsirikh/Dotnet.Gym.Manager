@@ -61,6 +61,7 @@ internal class ShellViewModel : ConductorOneViewModel
         _eventAggregator?.SubscribeOnUIThread(this);
         await base.OnActivateAsync(cancellationToken);
         await UserInfoListViewModel.ActivateAsync();
+        selectedViewModel = UserInfoListViewModel;
         _ = InformPopup(_excelImporter.Result);
     }
 

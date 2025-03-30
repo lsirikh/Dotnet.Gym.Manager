@@ -108,6 +108,10 @@
 						<RowDefinition Height="10" />
 						<!-- 24: ExpireSoonDay -->
 						<RowDefinition Height="50" />
+						<!-- 25: 간격 -->
+						<RowDefinition Height="10" />
+						<!-- 26: ExpireAfterDay -->
+						<RowDefinition Height="50" />
 					</Grid.RowDefinitions>
 
 					<!-- 0행: Url -->
@@ -220,7 +224,7 @@
                   IsChecked="{Binding SetupModel.IsLoadExcel}"
                   Content="Excel 자동 로드" />
 
-					<!-- 18행: PasswordDbServer -->
+					<!-- 24행: ExpireSoonDay -->
 					<TextBlock Grid.Row="24"
 						  Style="{StaticResource PropertyTextBlockStyle}"
 						  Text="ExpireSoonDay" />
@@ -228,6 +232,14 @@
 						Grid.Column="1"
 						Style="{StaticResource PropertyTextBoxStyle}"
 						Text="{Binding SetupModel.ExpireSoonDay}" />
+					<!-- 24행: ExpireSoonDay -->
+					<TextBlock Grid.Row="26"
+						  Style="{StaticResource PropertyTextBlockStyle}"
+						  Text="ExpireAfterDay" />
+					<TextBox Grid.Row="26"
+						Grid.Column="1"
+						Style="{StaticResource PropertyTextBoxStyle}"
+						Text="{Binding SetupModel.ExpireAfterDay}" />
 				</Grid>
 			</ScrollViewer>
 

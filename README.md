@@ -230,6 +230,7 @@
 * Version : v1.2.0
 
 1. Ironwall.Dotnet.Libraries의 Ironwall.Dotnet.Libraries.Db에 ExcelImporter 연동 로직 구현
-2. ExpireSoonDay settings 설정 업데이트 : 해당일을 설정하면 오늘 날짜로 부터 ExpireSoonDay이후에 서비스 마감되는 사람을 필터링할 수있다.
+2. ExpireSoonDay Settings 설정 업데이트 : x Day 해당일을 설정하면 오늘 날짜로 부터 ExpireSoonDay이후에 서비스 마감되는 사람을 필터링할 수있다(마감일 기준).
+3. ExpireAfterDay Setting 설정 업데이트 : -x Day 해당일을 설정하면 오늘이전 부터 오늘 - x Day 만큼 기간을 조회 해준다(마감일 기준). 
 
 <hr>

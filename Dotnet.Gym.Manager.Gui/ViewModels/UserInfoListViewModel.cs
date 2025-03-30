@@ -183,7 +183,7 @@ public class UserInfoListViewModel : BaseDataGridPanelViewModel<UserViewModel>
             if (cancellationToken.IsCancellationRequested) new TaskCanceledException("Task was cancelled!");
             //ViewModelProvider Setting
             _provider = IoC.Get<UserProvider>();
-
+            SearchCondition = EnumSearchCondition.None;
             DispatcherService.Invoke((System.Action)(() =>
             {
                 ViewModelProvider.Clear();
@@ -223,11 +223,15 @@ public class UserInfoListViewModel : BaseDataGridPanelViewModel<UserViewModel>
                     return user.MobilePhone.Contains(SearchData);
                 case EnumSearchCondition.ExpiringSoon:
                     return user.ActivePeriod != null &&
-                            user.ActivePeriod.EndDate.Value.Date == DateTime.Now.AddDays(_setup.ExpireSoonDay).Date;
-                           //user.ActivePeriod.EndDate.Value.Date < DateTime.Now.AddDays(3).Date &&
-                           //user.ActivePeriod.EndDate.Value.Date >= DateTime.Now.Date;
+                           //user.ActivePeriod.EndDate.Value.Date == DateTime.Now.AddDays(_setup.ExpireSoonDay).Date;
+                           user.ActivePeriod.EndDate.Value.Date <= DateTime.Now.AddDays(_setup.ExpireSoonDay).Date &&
+                           user.ActivePeriod.EndDate.Value.Date >= DateTime.Now.Date;
                 case EnumSearchCondition.Expired:
                     return user.ActivePeriod != null &&
+                           user.ActivePeriod.EndDate.Value.Date < DateTime.Now.Date;
+                case EnumSearchCondition.ExpiredAfter:
+                    return user.ActivePeriod != null &&
+                           user.ActivePeriod.EndDate.Value.Date >= DateTime.Now.AddDays(_setup.ExpireAfterDay).Date &&
                            user.ActivePeriod.EndDate.Value.Date < DateTime.Now.Date;
                 default:
                     return false;
@@ -278,6 +282,7 @@ public class UserInfoListViewModel : BaseDataGridPanelViewModel<UserViewModel>
                 break;
             case EnumSearchCondition.ExpiringSoon:
             case EnumSearchCondition.Expired:
+            case EnumSearchCondition.ExpiredAfter:
                 IsSearchable = true;
                 IsInputable = false;
                 break;

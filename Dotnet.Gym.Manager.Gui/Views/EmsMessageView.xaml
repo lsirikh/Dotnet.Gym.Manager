@@ -24,45 +24,45 @@
 	<Grid>
 		<!-- 열 정의 (AddUserView 와 유사하게 4개) -->
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="120"/>
-			<ColumnDefinition Width="120"/>
-			<ColumnDefinition Width="120"/>
-			<ColumnDefinition Width="120"/>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="1*"/>
 		</Grid.ColumnDefinitions>
 
 		<!-- 행 정의 -->
 		<Grid.RowDefinitions>
 			<!-- (0) 타이틀 영역 -->
-			<RowDefinition Height="80" />
+			<RowDefinition Height="2*" />
 			<!-- (3) NoticeType (Enum) -->
-			<RowDefinition Height="50" />
+			<RowDefinition Height="1*" />
 			<!-- (5) Sender -->
 			<RowDefinition Height="10" />
-			<RowDefinition Height="50" />
+			<RowDefinition Height="1*" />
 			<!-- (7) Receiver -->
 			<RowDefinition Height="10" />
-			<RowDefinition Height="50" />
+			<RowDefinition Height="1*" />
 			<!-- (9) Title -->
 			<RowDefinition Height="10" />
 			<RowDefinition Height="50" />
 			<!-- (11) Message (멀티라인) -->
 			<RowDefinition Height="10" />
-			<RowDefinition Height="100" />
+			<RowDefinition Height="2*" />
 			<!-- (13) MsgType (Enum) -->
 			<RowDefinition Height="10" />
-			<RowDefinition Height="50" />
+			<RowDefinition Height="1*" />
 			<!-- (15) Destination -->
 			<RowDefinition Height="10" />
-			<RowDefinition Height="50" />
+			<RowDefinition Height="1*" />
 			<!-- (17) IsReservation (체크박스) -->
 			<RowDefinition Height="10" />
-			<RowDefinition Height="50" />
+			<RowDefinition Height="1*" />
 			<!-- (19) Reservation (DatePicker) -->
 			<RowDefinition Height="10" />
-			<RowDefinition Height="50" />
+			<RowDefinition Height="1*" />
 			<!-- (21) SendTime (DatePicker) -->
 			<RowDefinition Height="10" />
-			<RowDefinition Height="50" />
+			<RowDefinition Height="1*" />
 			<!-- (23) AttachedImages 표시 -->
 			<!--<RowDefinition Height="10" />
 			<RowDefinition Height="50" />

@@ -15,5 +15,6 @@ public enum EnumSearchCondition
     Name,           // 이름
     PhoneNumber,    // 전화번호
     ExpiringSoon,   // 만료 7일 전
-    Expired         // 만료됨
+    Expired,         // 만료됨
+    ExpiredAfter     // 만료 10일 이내
 }
