@@ -7,14 +7,7 @@
 
 ### Site : Common
 
----
-### Update Date: 2025/03/16
-* Version : v1.0.0
-
-
 <hr>
-
-
 
 ## 1. Dotnet.Gym.Message 소개
 
@@ -202,3 +195,17 @@
 - **설정 관리**: `appsettings.json`
 
 ---
+### Update Date: 2025/03/16
+* Version : v1.0.0
+
+1. 초기 설정 및 Initial update...
+2. Readme.md 파일 구성
+
+---
+### Update Date: 2025/03/30
+* Version : v1.2.0
+
+1. Ironwall.Dotnet.Libraries의 Ironwall.Dotnet.Libraries.Db에 ExcelImporter 연동 로직 구현
+
+
+<hr>
