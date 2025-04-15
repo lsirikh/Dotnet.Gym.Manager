@@ -233,4 +233,10 @@
 2. ExpireSoonDay Settings 설정 업데이트 : x Day 해당일을 설정하면 오늘 날짜로 부터 ExpireSoonDay이후에 서비스 마감되는 사람을 필터링할 수있다(마감일 기준).
 3. ExpireAfterDay Setting 설정 업데이트 : -x Day 해당일을 설정하면 오늘이전 부터 오늘 - x Day 만큼 기간을 조회 해준다(마감일 기준). 
 
+---
+### Update Date: 2025/04/15
+* Version : v1.3.0
+
+1. ClosedXML 라이브러리를 이용한 ExcelExport 기능 구현.
+
 <hr>
