@@ -28,6 +28,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="8.2.0" />
     <PackageReference Include="Caliburn.Micro" Version="4.0.230" />
+    <PackageReference Include="ClosedXML" Version="0.104.2" />
     <PackageReference Include="MahApps.Metro" Version="2.4.10" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="5.1.0" />
     <PackageReference Include="MaterialDesignColors" Version="5.2.1" />

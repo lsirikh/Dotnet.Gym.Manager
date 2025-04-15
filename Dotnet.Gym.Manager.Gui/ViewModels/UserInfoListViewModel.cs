@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using ClosedXML.Excel;
 using Dotnet.Gym.Manager.Gui.Models;
 using Dotnet.Gym.Manager.Gui.ViewModels.Components;
 using Dotnet.Gym.Message.Accounts;
@@ -8,6 +9,7 @@ using Dotnet.Gym.Message.Providers;
 using Ironwall.Dotnet.Libraries.Base.Services;
 using Ironwall.Dotnet.Libraries.Db.Services;
 using Ironwall.Dotnet.Libraries.ViewModel.ViewModels.Components;
+using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -259,6 +261,67 @@ public class UserInfoListViewModel : BaseDataGridPanelViewModel<UserViewModel>
             await DataInitialize();
         }
     }
+
+    public async void OnClickExportExcel(object sender, RoutedEventArgs e)
+    {
+        var dialog = new SaveFileDialog
+        {
+            Filter = "Excel 파일 (*.xlsx)|*.xlsx",
+            FileName = $"회원정보_{DateTime.Now:yyyyMMdd}.xlsx",
+            DefaultExt = ".xlsx"
+        };
+
+        if (dialog.ShowDialog() == true)
+        {
+            ExportToExcel(dialog.FileName);
+
+            if (_windowManager == null) return;
+            var viewModel = IoC.Get<InformViewModel>();
+            viewModel.Title = "엑셀 정보 저장";
+            viewModel.Content = "고객의 정보가 엑셀로 저장되었습니다.";
+            var ret = await _windowManager.ShowDialogAsync(viewModel);
+        }
+    }
+
+    public void ExportToExcel(string filePath)
+    {
+        using var workbook = new XLWorkbook();
+        var worksheet = workbook.Worksheets.Add("UserList");
+
+        // 헤더 작성
+        worksheet.Cell(1, 1).Value = "이름";
+        worksheet.Cell(1, 2).Value = "전화번호";
+        worksheet.Cell(1, 3).Value = "나이";
+        worksheet.Cell(1, 4).Value = "성별";
+        worksheet.Cell(1, 5).Value = "등록일";
+        worksheet.Cell(1, 6).Value = "이용 여부";
+        worksheet.Cell(1, 7).Value = "서비스 상태";
+        worksheet.Cell(1, 8).Value = "이용 시작일";
+        worksheet.Cell(1, 9).Value = "이용 종료일";
+        worksheet.Cell(1, 10).Value = "락커";
+        worksheet.Cell(1, 11).Value = "신발장";
+
+        int row = 2;
+        foreach (var vm in ViewModelProvider)
+        {
+            worksheet.Cell(row, 1).Value = vm.UserName;
+            worksheet.Cell(row, 2).Value = vm.MobilePhone;
+            worksheet.Cell(row, 3).Value = vm.Age;
+            worksheet.Cell(row, 4).Value = vm.Gender.ToString();
+            worksheet.Cell(row, 5).Value = vm.RegisterDate.ToString("yyyy-MM-dd");
+            worksheet.Cell(row, 6).Value = vm.IsActiveState.ToString();
+            worksheet.Cell(row, 7).Value = vm.ServiceState.ToString();
+            worksheet.Cell(row, 8).Value = vm.ActivePeriod?.StartDate?.ToString("yyyy-MM-dd");
+            worksheet.Cell(row, 9).Value = vm.ActivePeriod?.EndDate?.ToString("yyyy-MM-dd");
+            worksheet.Cell(row, 10).Value = vm.Locker?.Locker;
+            worksheet.Cell(row, 11).Value = vm.Locker?.ShoeLocker;
+            row++;
+        }
+
+        worksheet.Columns().AdjustToContents();
+        workbook.SaveAs(filePath);
+    }
+
 
     private void CheckCondition()
     {
