@@ -1,6 +1,6 @@
 # Dotnet Gym Manager
 
-### Current Version : v1.2.0
+### Current Version : v1.3.0
 
 ### Goal
 > 운동시설을 관리하기 위한 기본 SW이다. 현재는 Aligo를 문자 보내기 위한 기본 기능을 중심으로 회원 등록 및 관리 기능이 중심이다.
